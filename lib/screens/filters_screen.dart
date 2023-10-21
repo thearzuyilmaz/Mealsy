@@ -24,22 +24,25 @@ class _FiltersScreenState extends State<FiltersScreen> {
   bool _vegetarian = false;
   bool _vegan = false;
 
+  // updating the values coming data from the Tabs_Screen
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _glutenFree = widget.currentFilters[Filter.glutenFree] ?? false;
+    _glutenFree = widget.currentFilters[Filter.glutenFree]!;
+    _lactoseFree = widget.currentFilters[Filter.lactoseFree]!;
+    _vegetarian = widget.currentFilters[Filter.vegetarian]!;
+    _vegan = widget.currentFilters[Filter.vegan]!;
   }
 
   @override
   Widget build(BuildContext context) {
     Map<Filter, bool> filterValues = {
-      Filter.glutenFree: widget.currentFilters[Filter.glutenFree] ?? false,
-      Filter.lactoseFree: widget.currentFilters[Filter.lactoseFree] ?? false,
-      Filter.vegetarian: widget.currentFilters[Filter.vegetarian] ?? false,
-      Filter.vegan: widget.currentFilters[Filter.vegan] ?? false,
+      Filter.glutenFree: _glutenFree,
+      Filter.lactoseFree: _lactoseFree,
+      Filter.vegetarian: _vegetarian,
+      Filter.vegan: _vegan,
     };
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Filters'),
