@@ -17,9 +17,7 @@ const kInitialFilters = {
 // As we are showing Favorite Meals here, we can create Favorite Meals List here
 
 class TabsScreen extends StatefulWidget {
-  TabsScreen({Key? key}) : super(key: key) {
-    print('tabs screen cons');
-  }
+  const TabsScreen({Key? key}) : super(key: key);
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();
