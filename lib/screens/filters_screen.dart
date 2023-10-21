@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/screens/main_drawer.dart';
-import 'package:meals_app/screens/tabs_screen.dart';
 
 enum Filter {
   glutenFree,
@@ -27,7 +25,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
   // updating the values coming data from the Tabs_Screen
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _glutenFree = widget.currentFilters[Filter.glutenFree]!;
     _lactoseFree = widget.currentFilters[Filter.lactoseFree]!;
