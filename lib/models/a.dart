@@ -1,1 +1,1 @@
-asdjashkjdaskd
+class A {}
