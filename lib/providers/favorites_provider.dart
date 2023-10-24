@@ -7,14 +7,15 @@ class FavoriteMealsNotifier extends StateNotifier<List<Meal>> {
 
   // add & remove methods are not supported by the riverpod package!!!!!
 
-  void toggleMealFavoriteStatus(Meal meal) {
+  bool toggleMealFavoriteStatus(Meal meal) {
     // removing meal if it's already in the list
     if (state.contains(meal)) {
       state = state.where((m) => m.id != meal.id).toList();
-
+      return false;
       // adding meal if it's not in the list
     } else {
       state = [...state, meal];
+      return true;
     }
   }
 }
