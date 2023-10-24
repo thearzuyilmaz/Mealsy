@@ -1,24 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals_app/providers/favorites_provider.dart';
 
-class MealDetailScreen extends StatelessWidget {
-  const MealDetailScreen(
-      {super.key, required this.meal, required this.toggleFavorite});
+// provider
+class MealDetailScreen extends ConsumerWidget {
+  const MealDetailScreen({
+    super.key,
+    required this.meal,
+  });
 
   final Meal meal;
-  final void Function(Meal meal) toggleFavorite;
 
+  // putting WidgetRef ref for provider differently than the ConsumerStatefulWidget as there is state there
+  // we don't have general ref property in stateless, we have ref as a parameter of build method
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // for Text widget, we should check here
+    final isFavorite = ref.watch(favoriteMealsProvider).contains(meal);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
         actions: [
+          // for function takes a function like onPressed or something similar, use read not watch
+          // I guess watch is something like ongoing listener, that is problematic for onPressed that needs to read a value once
           IconButton(
             onPressed: () {
-              toggleFavorite(meal);
+              // favoriteMealsProvider.notifier: to reach to notifier which has the toggle method
+              ref
+                  .read(favoriteMealsProvider.notifier)
+                  .toggleMealFavoriteStatus(meal);
+              // checking immediately after changing the status
+              final isFavorite =
+                  ref.watch(favoriteMealsProvider).contains(meal);
+
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                      isFavorite ? 'Meal added as favorite.' : 'Meal removed.'),
+                ),
+              );
             },
-            icon: Icon(Icons.star),
+            icon: isFavorite
+                ? Icon(Icons.star)
+                : Icon(Icons.star_border_outlined),
           ),
         ],
       ),
